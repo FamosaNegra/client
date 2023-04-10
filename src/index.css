@@ -1,7 +1,4 @@
-body {
-  margin: 0;
-  font-family: 'montserrat'!important;
-}
+
 .container {
   max-width: 100%;
   margin: 0 auto;
@@ -24,4 +21,135 @@ body {
   .container {
     max-width: 1170px;
   }
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Montserrat', sans-serif;
+}
+
+body {
+  background-color: #202123;
+  color: #fff;
+}
+
+.card {
+  background-color: rgb(19, 19, 19);
+
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid black !important;
+  /* adicionado border */
+}
+
+th,
+td {
+  padding: 8px;
+  text-align: center;
+}
+
+th {
+  background-color: #444654;
+  color: #fff;
+  text-align: center;
+}
+
+input,
+textarea {
+  width: 100%;
+  border: none !important;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  resize: vertical;
+  background-color: #444654 !important;
+  /* adicionado background */
+  color: white !important;
+  height: 40px;
+}
+
+input::placeholder {
+  color: white !important;
+}
+
+select {
+  width: 100%;
+  border: none;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  background-color: #444654 !important;
+  color: white !important;
+  border: none !important;
+  height: 40px !important;
+}
+
+button,
+input[type="submit"] {
+  background-color: red;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 12px 20px;
+  cursor: pointer;
+}
+
+button:hover,
+input[type="submit"]:hover {
+  background-color: #cc0000;
+}
+
+/* CSS para telas menores que 600px */
+@media (max-width: 600px) {
+
+  table,
+  th,
+  td {
+    font-size: 12px;
+  }
+
+  button,
+  input[type="submit"] {
+    font-size: 14px;
+  }
+}
+
+#select-mesa-terreo,
+#select-mesa-mezanino,
+#select-mesa-37 {
+  display: none;
+}
+
+.container-fluid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  /* altura do contêiner */
+}
+
+.login {
+  max-width: 500px;
+}
+
+#select-opcoes {
+  font-weight: 700;
+  padding: 0px;
+  margin: 0px;
+  border-bottom: 1px solid white!important;
+}
+
+.select-opcoes {
+  margin: 0px;
+}
+
+.table thead th {
+  vertical-align: baseline !important;
+}
+
+.form-group {
+  margin: 0px !important;
 }
