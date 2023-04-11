@@ -58,7 +58,7 @@ const Corretor = () => {
       }
     };
     try {
-      await axios.post("http://localhost:5000/corretores/", corretor);
+      await axios.post("https://client-rho-six.vercel.app/corretores/", corretor);
       setCPF("");
       setNome("");
       setApelido("");

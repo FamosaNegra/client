@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Badge, Button } from 'react-bootstrap';
+import { Table, Badge, Button, Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import MesaForm from './MesaForm';
 
@@ -45,7 +45,7 @@ export default function Mesas() {
     const mesaId = tr.getAttribute('data-id');
     console.log(`mesaId: ${mesaId}`);
   
-    axios.put(`http://localhost:5000/mesa/saida/${mesaId}`, {}, {
+    axios.put(`https://client-rho-six.vercel.app/mesa/saida/${mesaId}`, {}, {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -59,15 +59,14 @@ export default function Mesas() {
       })
       .catch(error => console.error(error));
   }
-  
-  
-
-
   return (
-    <div className='container'>
-      <div>
+    <Container>
+      <Row>
+      <Col md={2}>
         <MesaForm></MesaForm>
-      </div>
+        </Col>
+        <Col md={10}>
+
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -105,6 +104,9 @@ export default function Mesas() {
           ))}
         </tbody>
       </Table>
-    </div>
+      </Col>
+
+      </Row>
+      </Container>
   );
 }
