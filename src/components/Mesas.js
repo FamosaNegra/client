@@ -45,7 +45,7 @@ export default function Mesas() {
     const mesaId = tr.getAttribute('data-id');
     console.log(`mesaId: ${mesaId}`);
   
-    axios.put(`https://client-rho-six.vercel.app/mesa/saida/${mesaId}`, {}, {
+    axios.put(`/mesa/saida/${mesaId}`, {}, {
         headers: {
           'Content-Type': 'application/json'
         }
