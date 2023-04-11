@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const userRoutes = require("./app/routes/userRoutes");
 const mesaRoutes = require("./app/routes/mesaRoutes");
+const corretorRoutes = require("./app/routes/corretorRoutes");
 
 const cors = require('cors');
 
@@ -22,6 +23,8 @@ mongoose.connect('mongodb+srv://Admin:%40Ph974985101@databasemc.w2z5piy.mongodb.
 
 app.use("/usuarios", userRoutes);
 app.use("/mesa", mesaRoutes);
+app.use("/corretores", corretorRoutes);
+
 
 app.listen(5000, function() {
     console.log('Servidor iniciado na porta 5000');

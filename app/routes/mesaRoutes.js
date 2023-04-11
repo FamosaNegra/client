@@ -98,4 +98,15 @@ router.post('/mesa/:id/saida', async (req, res) => {
   }
 });
 
+router.put('/saida/:id', async (req, res) => {
+  const id = req.params.id;
+  try {
+    const mesa = await Mesa.findByIdAndUpdate(id, { saida: new Date() }, { new: true });
+    res.status(200).json(mesa);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+
 module.exports = router;

@@ -51,6 +51,14 @@ export default function SwipeableTemporaryDrawer() {
               </ListItemButton>
             </ListItem>
           </Link>
+
+          <Link to="/corretor">
+            <ListItem disablePadding>
+              <ListItemButton>
+                <ListItemText primary="Corretor" />
+              </ListItemButton>
+            </ListItem>
+          </Link>
       </List>
       
       

@@ -7,7 +7,9 @@ db.mongoose = mongoose;
 
 db.user = require("./user.model");
 db.role = require("./role.model");
-db.mesa = require("./mesa.model")
+db.mesa = require("./mesa.model");
+db.corretor = require("./corretor.model")
+
 
 db.ROLES = ["user", "admin", "moderator"];
 

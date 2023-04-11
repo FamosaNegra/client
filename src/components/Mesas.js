@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+import { Table, Badge, Button } from 'react-bootstrap';
 import axios from 'axios';
-import { Button } from 'react-bootstrap';
+import MesaForm from './MesaForm';
 
 export default function Mesas() {
-  const [mesas, setMesas] = React.useState([]);
+  const [mesas, setMesas] = useState([]);
   const [andarSelecionado, setAndarSelecionado] = useState('Todos');
 
-  React.useEffect(() => {
+  useEffect(() => {
     axios.get('http://localhost:5000/mesa/')
       .then(res => {
         setMesas(res.data)
@@ -20,7 +20,6 @@ export default function Mesas() {
 
   if (!Array.isArray(mesas)) {
     return <div>Carregando...</div>;
-    
   }
 
   const renderMesa = mesa => {
@@ -31,7 +30,8 @@ export default function Mesas() {
     } else if (mesa.andar === '37') {
       return mesa.mesa37;
     }
-  }  
+  } 
+
   const filtrarMesas = () => {
     if (andarSelecionado === 'Todos') {
       return mesas;
@@ -39,55 +39,72 @@ export default function Mesas() {
       return mesas.filter(mesa => mesa.andar === andarSelecionado)
     }
   }
-  const handleSaida = (id) => {
-    const dataAtual = new Date();
 
-    axios.put(`http://localhost:5000/mesa/${id}/saida`, {
-      saida: dataAtual
-    })
-    .then(res => {
-      window.location.reload();
-    })
+  function handleEncerrar(event) {
+    const tr = event.target.parentNode.parentNode;
+    const mesaId = tr.getAttribute('data-id');
+    console.log(`mesaId: ${mesaId}`);
+  
+    axios.put(`http://localhost:5000/mesa/saida/${mesaId}`, {}, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => {
+        const saida = tr.querySelector('td:last-child');
+        saida.textContent = new Date(response.data.saida).toLocaleString();
+        alert("Mesa Liberada");
+        window.location.reload();
+
+      })
+      .catch(error => console.error(error));
   }
+  
+  
+
+
   return (
     <div className='container'>
-    <TableContainer component={Paper}>
-      <Table aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>  <select value={andarSelecionado} onChange={handleChange}>
+      <div>
+        <MesaForm></MesaForm>
+      </div>
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>
+              <select value={andarSelecionado} onChange={handleChange}>
                 <option value="Todos">Todos</option>
                 <option value="Terreo">Terreo</option>
                 <option value="Mezanino">Mezanino</option>
                 <option value="37">37</option>
-              </select></TableCell>
-            <TableCell>Numero da Mesa</TableCell>
-            <TableCell>Status</TableCell>
-            <TableCell>Corretor</TableCell>
-            <TableCell>Tipo Mesa</TableCell>
-            <TableCell>Cliente</TableCell>
-            <TableCell>Telefone</TableCell>
-            <TableCell>Entrada</TableCell>
-            <TableCell>Saida</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-        {filtrarMesas().filter(mesa => mesa.saida === null).map(mesa =>(
-            <TableRow key={mesa._id}>
-              <TableCell>{mesa.andar}</TableCell>
-              <TableCell>{renderMesa(mesa)}</TableCell>
-              <TableCell>{mesa.status}</TableCell>
-              <TableCell>{mesa.corretor}</TableCell>
-              <TableCell>{mesa.tipomesa}</TableCell>
-              <TableCell>{mesa.cliente}</TableCell>
-              <TableCell>{mesa.telefone}</TableCell>
-              <TableCell>{mesa.entrada}</TableCell>
-              <TableCell> <Button onClick={() => handleSaida(mesa._id)}> Saida </Button> </TableCell>
-            </TableRow>
+              </select>
+            </th>
+            <th>Número da Mesa</th>
+            <th>Status</th>
+            <th>Corretor</th>
+            <th>Tipo Mesa</th>
+            <th>Cliente</th>
+            <th>Telefone</th>
+            <th>Entrada</th>
+            <th>Saída</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filtrarMesas().filter(mesa => mesa.saida === null).map(mesa =>(
+            <tr key={mesa._id} data-id={mesa._id}>
+              <td>{mesa.andar}</td>
+              <td>{renderMesa(mesa)}</td>
+              <td>{mesa.status === 'Ocupada' ? <Badge bg="danger">Ocupada</Badge> : <Badge bg="success">Disponível</Badge>}</td>
+              <td>{mesa.corretor}</td>
+              <td>{mesa.tipomesa}</td>
+              <td>{mesa.cliente}</td>
+              <td>{mesa.telefone}</td>
+              <td>{mesa.entrada}</td>
+              <td><Button variant="primary" onClick={handleEncerrar}>Encerrar</Button></td>
+            </tr>
           ))}
-        </TableBody>
+        </tbody>
       </Table>
-    </TableContainer>
     </div>
   );
 }
