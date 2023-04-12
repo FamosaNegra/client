@@ -34,7 +34,7 @@
   "scripts": {
     "start": "react-scripts start",
     "dev": "nodemon server.js",
-    "build": "npm run start && npm run dev",
+    "build": "npm start && npm run dev",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
