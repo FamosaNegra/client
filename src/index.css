@@ -1,0 +1,48 @@
+
+.container {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 750px;
+    padding: 0;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 970px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1170px;
+  }
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Montserrat', sans-serif;
+}
+
+body {
+  background-color: #202123;
+}
+
+a {
+  color: white; /* define a cor do texto para branco */
+  text-decoration: none; /* remove a sublinhado e outros efeitos de decoração */
+  cursor: pointer; /* define o cursor do mouse para o formato padrão de clicável */
+}
+a:link, a:visited {
+  color: white; /* define a cor do texto para branco para links não visitados e visitados */
+  text-decoration: none; /* remove a sublinhado e outros efeitos de decoração para links não visitados e visitados */
+  cursor: pointer; /* define o cursor do mouse para o formato padrão de clicável para links não visitados e visitados */
+  font-weight: 700;
+}
+
