@@ -1,41 +1,9 @@
 {
-    "version": 2,
-    "builds": [
-      {
-        "src": "client/package.json",
-        "use": "@vercel/static-build",
-        "config": {
-          "maxLambdaSize": "50mb"
-        }
-      },
-      {
-        "src": "server.js",
-        "use": "@vercel/node"
-      }
-    ],
-    "env": {
-      "MY_ENV_VARIABLE": "some value"
-    },
-    "public": true,
-    "ignore": ["client/.cache/**/*"],
-    "installConfig": {
-      "ignore": [
-        "/**/*.test.js",
-        "/**/*.spec.js",
-        "node_modules/@types",
-        "client/src/setupTests.js"
-      ]
-    },
     "build": {
       "env": {
         "NODE_ENV": "production"
       },
-      "functions": [
-        {
-          "handler": "server.js"
-        }
-      ],
-      "command": "npm run build && npm start"
+      "command": "npm run build && node server.js"
     }
   }
   
