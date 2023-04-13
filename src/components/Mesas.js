@@ -63,10 +63,11 @@ export default function Mesas() {
       .catch(error => console.error(error));
   }
   return (
-    <Container>
+    <Container className='pt-4 pb-4'>
       <Row>
       <Col md={2}>
-        <MesaForm></MesaForm>
+      <MesaForm></MesaForm>
+
         </Col>
         <Col md={10}>
 

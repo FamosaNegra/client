@@ -46,3 +46,36 @@ a:link, a:visited {
   font-weight: 700;
 }
 
+.sidebar-toggle {
+  position: fixed;
+  top: 50%;
+  left: 0;
+  z-index: 999;
+  transform: translateY(-50%);
+  transition: all 0.3s ease-in-out;
+}
+
+.sidebar-toggle:hover {
+  transform: translateX(10px) translateY(-50%);
+}
+
+.sidebar-toggle .bi {
+  font-size: 2rem;
+  margin-right: 10px;
+}
+
+.sidebar-toggle.active {
+  left: 250px;
+}
+
+.sidebar-toggle.active .bi {
+  transform: rotate(180deg);
+}
+.acionador-menu{
+  margin-top: 50px;
+  position: fixed;
+  background: black!important;
+  border-radius: 0px 6px 6px 0px!important;
+  border: none!important;
+  padding: 15px!important;
+}

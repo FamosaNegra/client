@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Container, Form, Row, Col, Button } from "react-bootstrap";
 
 const Corretor = () => {
   const [CPF, setCPF] = useState("");
@@ -26,7 +27,7 @@ const Corretor = () => {
   const [conta, setConta] = useState("");
   const [digito, setDigito] = useState("");
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const corretor = {
       CPF,
@@ -42,7 +43,7 @@ const Corretor = () => {
         bairro,
         cidade,
         estado,
-        cep
+        cep,
       },
       email,
       imobiliaria,
@@ -54,11 +55,12 @@ const Corretor = () => {
         banco,
         agencia,
         conta,
-        digito
-      }
+        digito,
+      },
     };
     try {
-      await axios.post("/corretores/", corretor);
+      const url = `${window.location.protocol}//${window.location.hostname}:443/corretores/`
+      await axios.post(url , corretor);
       setCPF("");
       setNome("");
       setApelido("");
@@ -90,199 +92,315 @@ const Corretor = () => {
   };
 
   return (
-    <div className='container'>
+    <Container className="pt-4 pb-4">
       <h2>Cadastro de Corretor</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>CPF:</label>
-          <input
-            type="text"
-            value={CPF}
-            onChange={e => setCPF(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Nome:</label>
-          <input
-            type="text"
-            value={nome}
-            onChange={e => setNome(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Apelido:</label>
-          <input
-            type="text"
-            value={apelido}
-            onChange={e => setApelido(e.target.value)}
-          />
-        </div>
-        <div>
-          <label>Data de Nascimento:</label>
-          <input
-            type="date"
-            value={data_nasc}
-            onChange={e => setDataNasc(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Telefone:</label>
-          <input
-            type="text"
-            value={telefone}
-            onChange={e => setTelefone(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>RG:</label>
-          <input
-            type="text"
-            value={rg}
-            onChange={e => setRG(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Endereço:</label>
-          <input
-            type="text"
-            value={logradouro}
-            onChange={e => setLogradouro(e.target.value)}
-            placeholder="Logradouro"
-            required
-          />
-          <input
-            type="text"
-            value={numero}
-            onChange={e => setNumero(e.target.value)}
-            placeholder="Número"
-            required
-          />
-         <input
-            type="text"
-            value={complemento}
-            onChange={e => setComplemento(e.target.value)}
-            placeholder="Complemento"
-          />
-          <input
-            type="text"
-            value={bairro}
-            onChange={e => setBairro(e.target.value)}
-            placeholder="Bairro"
-            required
-          />
-          <input
-            type="text"
-            value={cidade}
-            onChange={e => setCidade(e.target.value)}
-            placeholder="Cidade"
-            required
-          />
-          <input
-            type="text"
-            value={estado}
-            onChange={e => setEstado(e.target.value)}
-            placeholder="Estado"
-            required
-          />
-          <input
-            type="text"
-            value={cep}
-            onChange={e => setCep(e.target.value)}
-            placeholder="CEP"
-            required
-          />
-        </div>
-        <div>
-          <label>E-mail:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Imobiliária:</label>
-          <input
-            type="text"
-            value={imobiliaria}
-            onChange={e => setImobiliaria(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Categoria/Nível:</label>
-          <input
-            type="text"
-            value={categoria_nivel}
-            onChange={e => setCategoriaNivel(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Código Interno:</label>
-          <input
-            type="text"
-            value={codigointerno}
-            onChange={e => setCodigoInterno(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>CRECI:</label>
-          <input
-            type="text"
-            value={creci}
-            onChange={e => setCreci(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Conta Bancária:</label>
-          <input
-            type="text"
-            value={tipo_conta}
-            onChange={e => setTipoConta(e.target.value)}
-            placeholder="Tipo de conta"
-            required
-          />
-          <input
-            type="text"
-            value={banco}
-            onChange={e => setBanco(e.target.value)}
-            placeholder="Banco"
-            required
-          />
-          <input
-            type="text"
-            value={agencia}
-            onChange={e => setAgencia(e.target.value)}
-            placeholder="Agência"
-            required
-          />
-          <input
-            type="text"
-            value={conta}
-            onChange={e => setConta(e.target.value)}
-            placeholder="Conta"
-            required
-          />
-          <input
-            type="text"
-            value={digito}
-            onChange={e => setDigito(e.target.value)}
-            placeholder="Dígito"
-            required
-          />
-        </div>
-        <button type="submit">Cadastrar</button>
-      </form>
-    </div>
+      <Form onSubmit={handleSubmit}>
+        <Row className="mb-4">
+          <Col md={4}>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>CPF:</Form.Label>
+              <Form.Control
+                type="text"
+                value={CPF}
+                onChange={(e) => setCPF(e.target.value)}
+                required
+              />
+            </Form.Group>
+          </Col>
+          <Col md={4}>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Nome:</Form.Label>
+              <Form.Control
+                type="text"
+                value={nome}
+                onChange={(e) => setNome(e.target.value)}
+                required
+              />
+            </Form.Group>
+          </Col>
+          <Col md={4}>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Apelido:</Form.Label>
+              <Form.Control
+                type="text"
+                value={apelido}
+                onChange={(e) => setApelido(e.target.value)}
+              />
+            </Form.Group>
+          </Col>
+        </Row>
+
+        <Row className="mb-4">
+          <Col md={4}>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Data de Nascimento:</Form.Label>
+              <Form.Control
+                type="date"
+                value={data_nasc}
+                onChange={(e) => setDataNasc(e.target.value)}
+                required
+              />
+            </Form.Group>
+          </Col>
+          <Col md={4}>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Telefone:</Form.Label>
+              <Form.Control
+                type="text"
+                value={telefone}
+                onChange={(e) => setTelefone(e.target.value)}
+                required
+              />
+            </Form.Group>
+          </Col>
+          <Col md={4}>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>RG:</Form.Label>
+              <Form.Control
+                type="text"
+                value={rg}
+                onChange={(e) => setRG(e.target.value)}
+                required
+              />
+            </Form.Group>
+          </Col>
+        </Row>
+
+        <Row className="mb-4">
+          <Col md={3}>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Endereço:</Form.Label>
+              <Form.Control
+                type="text"
+                value={logradouro}
+                onChange={(e) => setLogradouro(e.target.value)}
+                placeholder="Logradouro"
+                required
+              />
+            </Form.Group>
+          </Col>
+
+          <Col md={3}>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Numero:</Form.Label>
+              <Form.Control
+                type="text"
+                value={numero}
+                onChange={(e) => setNumero(e.target.value)}
+                placeholder="Número"
+                required
+              />
+            </Form.Group>
+          </Col>
+
+          <Col md={3}>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Complemento:</Form.Label>
+              <Form.Control
+                type="text"
+                value={complemento}
+                onChange={(e) => setComplemento(e.target.value)}
+                placeholder="Complemento"
+              />
+            </Form.Group>
+          </Col>
+
+          <Col md={3}>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Bairro:</Form.Label>
+
+              <Form.Control
+                type="text"
+                value={bairro}
+                onChange={(e) => setBairro(e.target.value)}
+                placeholder="Bairro"
+                required
+              />
+            </Form.Group>
+          </Col>
+        </Row>
+
+        <Row className="mb-4">
+          <Col md={4}>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Cidade:</Form.Label>
+              <Form.Control
+                type="text"
+                value={cidade}
+                onChange={(e) => setCidade(e.target.value)}
+                placeholder="Cidade"
+                required
+              />
+            </Form.Group>
+          </Col>
+
+          <Col md={4}>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Estado:</Form.Label>
+              <Form.Control
+                type="text"
+                value={estado}
+                onChange={(e) => setEstado(e.target.value)}
+                placeholder="Estado"
+                required
+              />
+            </Form.Group>
+          </Col>
+
+          <Col md={4}>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Cep:</Form.Label>
+              <Form.Control
+                type="text"
+                value={cep}
+                onChange={(e) => setCep(e.target.value)}
+                placeholder="CEP"
+                required
+              />
+            </Form.Group>
+          </Col>
+        </Row>
+
+        <Row className="mb-4">
+          <Col md={4}>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>E-mail:</Form.Label>
+              <Form.Control
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                requiredl
+              />
+            </Form.Group>
+          </Col>
+          <Col md={4}>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Superintendencia:</Form.Label>
+              <Form.Select
+                type="text"
+                value={imobiliaria}
+                onChange={(e) => setImobiliaria(e.target.value)}
+                required
+              >
+                <option>Pamela</option>
+                <option>Lisboa</option>
+                <option>Garcia</option>
+                <option>Yago</option>
+                <option>Mateus</option>
+              </Form.Select>
+            </Form.Group>
+          </Col>
+          <Col md={4}>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Corretor ou Gerente:</Form.Label>
+              <Form.Select
+                type="text"
+                value={categoria_nivel}
+                onChange={(e) => setCategoriaNivel(e.target.value)}
+                required
+              >
+                <option>Corretor</option>
+                <option>Gerente</option>
+              </Form.Select>
+            </Form.Group>
+          </Col>
+        </Row>
+
+        <Row className="mb-4">
+        <Col>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Código Interno:</Form.Label>
+              <Form.Control
+               type="text"
+               value={codigointerno}
+               onChange={(e) => setCodigoInterno(e.target.value)}
+               required
+              />
+            </Form.Group>
+          </Col>
+
+          <Col>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>CRECI:</Form.Label>
+              <Form.Control
+               type="text"
+               value={creci}
+               onChange={(e) => setCreci(e.target.value)}
+               required
+              />
+            </Form.Group>
+          </Col>
+        </Row>
+        
+
+        <Row className="mb-4">
+          <Col>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Tipo de conta:</Form.Label>
+              <Form.Control
+                type="text"
+                value={tipo_conta}
+                onChange={(e) => setTipoConta(e.target.value)}
+                placeholder="Tipo de conta"
+                required
+              />
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Banco:</Form.Label>
+              <Form.Control
+                type="text"
+                value={banco}
+                onChange={(e) => setBanco(e.target.value)}
+                placeholder="Banco"
+                required
+              />
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Agência:</Form.Label>
+              <Form.Control
+                type="text"
+                value={agencia}
+                onChange={(e) => setAgencia(e.target.value)}
+                placeholder="Agência"
+                required
+              />
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Conta:</Form.Label>
+              <Form.Control
+                type="text"
+                value={conta}
+                onChange={(e) => setConta(e.target.value)}
+                placeholder="Conta"
+                required
+              />
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Conta:</Form.Label>
+              <Form.Control
+                type="text"
+                value={digito}
+                onChange={(e) => setDigito(e.target.value)}
+                placeholder="Dígito"
+                required
+              />
+            </Form.Group>
+          </Col>
+        </Row>
+
+        <Button variant="primary" type="submit">
+        Finalizar
+      </Button>
+      </Form>
+    </Container>
   );
 };
 

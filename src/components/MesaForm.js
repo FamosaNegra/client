@@ -1,5 +1,6 @@
 import React from "react";
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
+import Select from 'react-select';
 
 class MesaForm extends React.Component {
   constructor(props) {
@@ -11,6 +12,7 @@ class MesaForm extends React.Component {
       mesa37: "",
       status: "ocupada",
       corretor: "",
+      corretores: [],
       gerente: "",
       tipoMesa: "venda",
       cliente: "",
@@ -19,24 +21,39 @@ class MesaForm extends React.Component {
       saida: "",
     };
     this.state = {
-        andar: '',
-        mesaTerreo: '',
-        mesaMezanino: '',
-        mesa37: '',
-        showMesa: false
-      };
+      andar: "",
+      mesaTerreo: "",
+      mesaMezanino: "",
+      mesa37: "",
+      showMesa: false,
+    };
   }
   handleAndarChange = (event) => {
     const andar = event.target.value;
     this.setState({
       andar: andar,
-      mesaTerreo: '',
-      mesaMezanino: '',
-      mesa37: '',
-      showMesa: andar !== ''
+      mesaTerreo: "",
+      mesaMezanino: "",
+      mesa37: "",
+      showMesa: andar !== "",
     });
+  };
+  componentDidMount() {
+    const url = `${window.location.protocol}//${window.location.hostname}:443/corretores/`;
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        const options = data.map((corretor) => ({
+          value: corretor.id,
+          label: corretor.nome,
+        }));
+        this.setState({
+          corretores: options,
+        });
+      })
+      .catch((error) => console.error(error));
   }
-  
+
   render() {
     const mesasTerreo = Array.from(Array(22), (_, i) => `Mesa ${i + 1}`);
     const mesasMezanino = Array.from(Array(17), (_, i) => `Mesa ${i + 1}`);
@@ -58,10 +75,10 @@ class MesaForm extends React.Component {
             <option value="Terreo">Terreo</option>
             <option value="Mezanino">Mezanino</option>
             <option value="37">37</option>
-            </Input>
+          </Input>
         </FormGroup>
 
-        {this.state.showMesa && this.state.andar === 'Terreo' && (
+        {this.state.showMesa && this.state.andar === "Terreo" && (
           <FormGroup id="select-mesa-terreo">
             <Label for="mesa-terreo">Mesa - Terreo:</Label>
             <Input
@@ -75,13 +92,13 @@ class MesaForm extends React.Component {
             >
               <option value="">Selecione a mesa</option>
               {mesasTerreo.map((mesa) => (
-<option value={mesa}>{mesa}</option>
+                <option value={mesa}>{mesa}</option>
               ))}
             </Input>
           </FormGroup>
         )}
 
-        {this.state.showMesa && this.state.andar === 'Mezanino' && (
+        {this.state.showMesa && this.state.andar === "Mezanino" && (
           <FormGroup id="select-mesa-mezanino">
             <Label for="mesa-mezanino">Mesa - Mezanino:</Label>
             <Input
@@ -101,7 +118,7 @@ class MesaForm extends React.Component {
           </FormGroup>
         )}
 
-        {this.state.showMesa && this.state.andar === '37' && (
+        {this.state.showMesa && this.state.andar === "37" && (
           <FormGroup id="select-mesa-37">
             <Label for="mesa-37">Mesa - 37:</Label>
             <Input
@@ -119,7 +136,7 @@ class MesaForm extends React.Component {
               ))}
             </Input>
           </FormGroup>
-        )}  
+        )}
 
         <FormGroup>
           <Label for="status">Status:</Label>
@@ -138,14 +155,12 @@ class MesaForm extends React.Component {
 
         <FormGroup>
           <Label for="corretor">Corretor:</Label>
-          <Input
-            type="select"
-            name="corretor"
-            id="corretor"
-            value={this.state.corretor}
-            onChange={(e) => this.setState({ corretor: e.target.value })}
-            required
-          ></Input>
+          <Select
+  options={this.state.corretores}
+  onChange={(selectedOption) => {
+    this.setState({ corretor: selectedOption.value });
+  }}
+/>
         </FormGroup>
 
         <FormGroup>
@@ -209,20 +224,22 @@ class MesaForm extends React.Component {
             value={this.state.entrada}
             required
             onChange={(e) => this.setState({ entrada: e.target.value })}
-            ></Input>
-            <Input
-              type="datetime-local"
-              name="saida"
-              id="saida"
-              style={{ display: "none" }}
-              value={this.state.saida}
-            ></Input>
-          </FormGroup>
-  
-          <Button type="submit" className="btn btn-primary">Enviar</Button>
-        </Form>
-      );
-    }
+          ></Input>
+          <Input
+            type="datetime-local"
+            name="saida"
+            id="saida"
+            style={{ display: "none" }}
+            value={this.state.saida}
+          ></Input>
+        </FormGroup>
+
+        <Button type="submit" className="btn btn-primary">
+          Enviar
+        </Button>
+      </Form>
+    );
   }
-  
-  export default MesaForm;
+}
+
+export default MesaForm;
