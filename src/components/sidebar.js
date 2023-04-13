@@ -36,7 +36,7 @@ export default function SwipeableTemporaryDrawer() {
     >
       <List className='lista-menu'>
        
-          <Link to="/login">
+          <Link to="/">
             <ListItem disablePadding>
               <ListItemButton>
                 <ListItemText primary="Login" />

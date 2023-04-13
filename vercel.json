@@ -1,9 +1,9 @@
 {
-    "build": {
-      "env": {
-        "NODE_ENV": "production"
-      },
-      "command": "npm run build && node server.js"
-    }
-  }
-  
+  "version": 2,
+  "builds": [
+    { "src": "server.js", "use": "@now/node" }
+  ],
+  "routes": [
+    { "src": "/.*", "dest": "/server.js" }
+  ]
+}

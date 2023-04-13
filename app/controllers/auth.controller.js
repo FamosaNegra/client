@@ -109,6 +109,6 @@ exports.signin = (req, res) => {
 
 exports.logout = (req, res) => {
     res.clearCookie("authToken"); // Limpa o cookie de autenticação
-    res.redirect("/login"); // Redireciona para a página de login
+    res.redirect("/"); // Redireciona para a página de login
   };
   
