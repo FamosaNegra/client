@@ -83,7 +83,7 @@ app.post('/api/auth/signin', (req, res) => {
       });
     });
 });
-
+const port = process.env.PORT || 3001;
 app.listen(443, function() {
     console.log('Servidor iniciado na porta 443');
 });
