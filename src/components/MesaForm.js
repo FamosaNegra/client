@@ -53,14 +53,29 @@ class MesaForm extends React.Component {
       })
       .catch((error) => console.error(error));
   }
+  handleSubmit = (event) => {
+    event.preventDefault();
+    const url = `${window.location.protocol}//${window.location.hostname}:443/mesa/`;
+    fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(this.state),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        // fazer algo com a resposta da requisição, se necessário
+      })
+      .catch((error) => console.error(error));
+  };
+  
 
   render() {
     const mesasTerreo = Array.from(Array(22), (_, i) => `Mesa ${i + 1}`);
     const mesasMezanino = Array.from(Array(17), (_, i) => `Mesa ${i + 1}`);
     const mesas37 = Array.from(Array(30), (_, i) => `Mesa ${i + 1}`);
-
     return (
-      <Form action="/criar-mesa" method="POST" id="form" className="form">
+      <Form onSubmit={this.handleSubmit} method="POST" id="form" className="form">
         <FormGroup>
           <Label for="andar">Andar:</Label>
           <Input
@@ -154,14 +169,15 @@ class MesaForm extends React.Component {
         </FormGroup>
 
         <FormGroup>
-          <Label for="corretor">Corretor:</Label>
-          <Select
-  options={this.state.corretores}
-  onChange={(selectedOption) => {
-    this.setState({ corretor: selectedOption.value });
-  }}
-/>
-        </FormGroup>
+  <Label for="corretor">Corretor:</Label>
+  <Select
+    options={this.state.corretores}
+    value={this.state.corretor}
+    onChange={(selectedOption) => {
+      this.setState({ corretor: selectedOption.value });
+    }}
+  />
+</FormGroup>
 
         <FormGroup>
           <Label for="gerente">Gerente:</Label>
@@ -170,7 +186,7 @@ class MesaForm extends React.Component {
             name="gerente"
             id="gerente"
             value={this.state.gerente}
-            readOnly
+            
             required
           ></Input>
         </FormGroup>
