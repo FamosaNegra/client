@@ -25,8 +25,17 @@ class MesaForm extends React.Component {
       mesaTerreo: "",
       mesaMezanino: "",
       mesa37: "",
-      showMesa: false,
+      status: "",
+      corretor: "",
+      corretores: [],
+      gerente: "",
+      tipoMesa: "venda", // definindo o valor padrão para o campo
+      cliente: "",
+      telefone: "",
+      entrada: "",
+      saida: "",
     };
+    
   }
   handleAndarChange = (event) => {
     const andar = event.target.value;
@@ -55,11 +64,34 @@ class MesaForm extends React.Component {
   }
   handleSubmit = (event) => {
     event.preventDefault();
+    console.log("Valores do formulário:", this.state);
+
     const url = `${window.location.protocol}//${window.location.hostname}:443/mesa/`;
+    const { andar, mesaTerreo, mesaMezanino, mesa37, status, corretor, gerente, tipoMesa, cliente, telefone, entrada, saida } = this.state;
+    const formData = {
+      corretor: corretor.toString(), // converter para String
+      andar: andar,
+      status: status,
+      tipoMesa: tipoMesa,
+      mesaTerreo: mesaTerreo,
+      mesaMezanino: mesaMezanino,
+      mesa37: mesa37,
+      gerente: gerente,
+      cliente: cliente,
+      telefone: telefone,
+      entrada: entrada,
+      saida: saida
+    };
+
+    if (!andar || !status || !tipoMesa) {
+      alert("Por favor, preencha todos os campos obrigatórios.");
+      return;
+    }
+
     fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(this.state),
+      body: JSON.stringify(formData),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -68,6 +100,8 @@ class MesaForm extends React.Component {
       })
       .catch((error) => console.error(error));
   };
+
+  
   
 
   render() {
@@ -153,43 +187,44 @@ class MesaForm extends React.Component {
           </FormGroup>
         )}
 
-        <FormGroup>
-          <Label for="status">Status:</Label>
-          <Input
-            type="select"
-            name="status"
-            id="status"
-            value={this.state.status}
-            required
-            onChange={(e) => this.setState({ status: e.target.value })}
-          >
-            <option value="ocupada">Ocupada</option>
-            <option value="mba">MBA</option>
-          </Input>
-        </FormGroup>
+<FormGroup>
+  <Label for="status">Status</Label>
+  <Input
+    type="select"
+    name="status"
+    id="status"
+    value={this.state.status}
+    onChange={(event) =>
+      this.setState({ status: event.target.value })
+    }
+  >    <option value="ocupada">Ocupada</option>
+    <option value="disponivel">Disponível</option>
+    <option value="mba">MBA</option>
+  </Input>
+</FormGroup>
+
 
         <FormGroup>
   <Label for="corretor">Corretor:</Label>
   <Select
     options={this.state.corretores}
     value={this.state.corretor}
-    onChange={(selectedOption) => {
-      this.setState({ corretor: selectedOption.value });
-    }}
+    onChange={(option) => this.setState({ corretor: option })}
   />
 </FormGroup>
 
-        <FormGroup>
-          <Label for="gerente">Gerente:</Label>
-          <Input
-            type="text"
-            name="gerente"
-            id="gerente"
-            value={this.state.gerente}
-            
-            required
-          ></Input>
-        </FormGroup>
+<FormGroup>
+  <Label for="gerente">Gerente:</Label>
+  <Input
+    type="text"
+    name="gerente"
+    id="gerente"
+    value={this.state.gerente}
+    required
+    onChange={(event) => this.setState({ gerente: event.target.value })}
+  />
+</FormGroup>
+
 
         <FormGroup>
           <Label for="tipo-mesa">Tipo de Mesa:</Label>

@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const mesaSchema = new mongoose.Schema({
   _id: {
     type: mongoose.Types.ObjectId,
-    default: mongoose.Types.ObjectId
+    default: new mongoose.Types.ObjectId
   },
   andar: {
     type: String,
@@ -34,7 +34,7 @@ const mesaSchema = new mongoose.Schema({
   tipomesa: {
     type: String,
     enum: ['venda', 'entrevista'],
-    required: true
+    required: false
   },
   cliente: {
     type: String,
