@@ -10,11 +10,11 @@ class MesaForm extends React.Component {
       mesaTerreo: "",
       mesaMezanino: "",
       mesa37: "",
-      status: "ocupada",
+      status: "", // tornando o campo status obrigatório
       corretor: "",
       corretores: [],
       gerente: "",
-      tipoMesa: "venda",
+      tipoMesa: "venda", // definindo o valor padrão para o campo
       cliente: "",
       telefone: "",
       entrada: "",
@@ -62,6 +62,7 @@ class MesaForm extends React.Component {
       })
       .catch((error) => console.error(error));
   }
+
   handleSubmit = (event) => {
     event.preventDefault();
     console.log("Valores do formulário:", this.state);
@@ -69,7 +70,7 @@ class MesaForm extends React.Component {
     const url = `${window.location.protocol}//${window.location.hostname}:443/mesa/`;
     const { andar, mesaTerreo, mesaMezanino, mesa37, status, corretor, gerente, tipoMesa, cliente, telefone, entrada, saida } = this.state;
     const formData = {
-      corretor: corretor.toString(), // converter para String
+      corretor: corretor.value,
       andar: andar,
       status: status,
       tipoMesa: tipoMesa,
@@ -82,12 +83,10 @@ class MesaForm extends React.Component {
       entrada: entrada,
       saida: saida
     };
-
     if (!andar || !status || !tipoMesa) {
       alert("Por favor, preencha todos os campos obrigatórios.");
       return;
     }
-
     fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -96,13 +95,11 @@ class MesaForm extends React.Component {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        // fazer algo com a resposta da requisição, se necessário
+        alert("Mesa Cadastrada");
+        window.location.reload();
       })
       .catch((error) => console.error(error));
   };
-
-  
-  
 
   render() {
     const mesasTerreo = Array.from(Array(22), (_, i) => `Mesa ${i + 1}`);

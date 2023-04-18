@@ -48,7 +48,10 @@ export default function Mesas() {
     const mesaId = tr.getAttribute('data-id');
     console.log(`mesaId: ${mesaId}`);
   
-    axios.put(`/mesa/saida/${mesaId}`, {}, {
+    const url = `${window.location.protocol}//${window.location.hostname}:443`;
+
+
+    axios.put(`${url}/mesa/saida/${mesaId}`, {}, {
         headers: {
           'Content-Type': 'application/json'
         }

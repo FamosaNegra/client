@@ -1,10 +1,6 @@
 const mongoose = require("mongoose");
 
 const mesaSchema = new mongoose.Schema({
-  _id: {
-    type: mongoose.Types.ObjectId,
-    default: new mongoose.Types.ObjectId
-  },
   andar: {
     type: String,
     enum: ['Terreo', 'Mezanino', '37'],
@@ -29,7 +25,7 @@ const mesaSchema = new mongoose.Schema({
   },
   corretor: {
     type: String,
-    required: true
+    required: false
   },
   tipomesa: {
     type: String,
@@ -55,6 +51,5 @@ const mesaSchema = new mongoose.Schema({
 });
 
 const Mesa = mongoose.model("Mesa", mesaSchema);
-
 
 module.exports = Mesa;
